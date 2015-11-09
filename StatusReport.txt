@@ -1,0 +1,14 @@
+course: CA4
+exercise: 1
+date: 2015-11-11
+surname: Hosa
+forename: Piotr
+email: 2038565h@student.gla.ac.uk
+
+Both parts of the exercise have been completed. They both compile and appear to work correctly. I tested both circuits with several inputs: ones that assume correct but also incorrect input. In my design I made sure that any accidental signals are covered by resetting the initial state of the state machine. I used k-maps to make sure that parts of my design perform as intended.
+
+The controller1 circuit works fine and was tested in this way.
+
+The controller2 circuit works fine and was tested in this way.
+
+I have to add comments to code.
