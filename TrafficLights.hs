@@ -28,7 +28,6 @@ controller2 reset walk_request = (green, amber, red, walk, wait, request_count)
         reset' = inv reset
         walk_request_internal = and2 walk_request state_green0
         walk_request_internal' = inv walk_request_internal
-        request_count = [zero, zero]
 
         state_green0 = dff(or2 reset (xor2 (and2 state_green0 walk_request_internal') state_amber5))
         state_amber1 = dff(and2 walk_request_internal state_green0)
@@ -42,3 +41,12 @@ controller2 reset walk_request = (green, amber, red, walk, wait, request_count)
         red = orw [state_red2, state_red3, state_red4]
         walk = red
         wait = orw [green, amber]
+        request_count = count16 reset walk_request_internal
+
+count16 :: Clocked a => a -> a -> [a]
+count16 reset increment = count
+    where
+        increment_internal = replicate 15 zero ++ [increment]
+        (carry, count) = rippleAdd zero (bitslice2 increment_internal increment_internal)
+        --(carry, reg_input) = rippleAdd zero (bitslice2 count increment_internal)
+        --count = reg 16 increment reg_input
