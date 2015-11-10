@@ -8,12 +8,13 @@ separator = putStrLn (take 76 (repeat '-'))
 
 main :: IO ()
 main =
-    do separator
+    do
+    separator
     putStrLn "Simulate controller1"
     run_controller1 controller1_input1
 
-    putStrLn "Simulate controller1"
-    run_controller1 controller1_input1
+    putStrLn "Simulate controller1 with additional reset"
+    run_controller1 controller1_input2
 
     separator
     putStrLn "Simulate controller2 no requests"
@@ -54,7 +55,7 @@ controller1_input1 =
   [[0], [0], [1], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0]]
 
 controller1_input2 =
-  [[0], [0], [1], [0], [0], [1], [0], [0], [0], [0], [0], [0], [0], [0]]
+  [[0], [0], [1], [1], [0], [0], [0], [0], [1], [0], [0], [0], [0], [0]]
 
 
 run_controller2 input = runAllInput input output
@@ -71,16 +72,16 @@ run_controller2 input = runAllInput input output
         output =
           [string "Input: reset = ", bit reset, string " walk_request = ", bit walk_request,
           string "  Output: green = ", bit green, string " amber = ", bit amber, string " red = ", bit red, 
-          string " walk = ", bit walk, string " wait = ", bit wait, string " request_count = ", word request_count]
+          string " walk = ", bit walk, string " wait = ", bit wait, string " request_count = ", hex request_count]
 
 controller2_input1 =
-  [[0, 0], [1, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
+  [[0, 0], [1, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
 
 controller2_input2 =
-  [[0, 0], [1, 0], [0, 0], [0, 0], [0, 1], [0, 0], [0, 0], [0, 0], [0, 0]]
+  [[0, 0], [1, 0], [0, 0], [0, 0], [0, 1], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
 
 controller2_input3 =
-  [[0, 0], [1, 0], [0, 0], [0, 0], [0, 1], [0, 0], [0, 1], [0, 0], [0, 1], [0, 0]]
+  [[0, 0], [1, 0], [0, 0], [0, 0], [0, 1], [0, 1], [0, 1], [0, 0], [0, 0], [0, 1], [0, 0]]
 
 controller2_input4 =
   [[0, 0], [1, 0], [0, 0], [0, 1], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], 
