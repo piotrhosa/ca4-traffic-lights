@@ -5,10 +5,10 @@ surname: Hosa
 forename: Piotr
 email: 2038565h@student.gla.ac.uk
 
-Both parts of the exercise have been completed. They both compile and appear to work correctly. I tested both circuits with several inputs: ones that assume correct but also incorrect input. In my design I made sure that any accidental signals are covered by resetting the initial state of the state machine. I used k-maps to make sure that parts of my design perform as intended.
+Both parts of the exercise have been completed. They both compile and appear to work correctly. I tested both circuits with several inputs: ones that assume correct but also incorrect input. In my design I made sure that any accidental signals are covered by resetting the initial state of the state machine. I used k-maps to make sure that some parts of my design perform as intended.
 
-The controller1 circuit works fine and was tested in this way.
+The controller1 was tested for normal operation in case 1.1 (reset is pressed once at the beginning) and also for a case when reset is pressed a second time (case 1.2). According to the specification 1.2 is an unusual case (it should not be pressed again but what if it is?), however I wanted to make sure that if this happens the circuit goes back to its initial green state at the next clock tick. The first two simulations in Testbench.hs demonstrate this.
 
-The controller2 circuit works fine and was tested in this way.
+The controller2 circuit is in essence similar to controller1 (based on one dff per state), but it also incorporates another circuit called walkCount. The walkCount circuit consists of a ripple carry adder and a register. When the walk_request signal goes high 0x0001 is added to the current value in the register. The walk_request signal also serves as load enable for the register. I created a total of 5 test cases for controller2. The resetBus circuit, which is used by walkCount, takes advantage of the map2 pattern to reset the register when reset goes high. Case 2.1 assumes operation with an initial reset and no walk_request. The 2nd one shows the circuit react to a walk_request and it is visible that it goes through the correct sequence and returns to the initial green state. Case 2.3 checks that the circuit does not react to the walk_request signal going high while it is not yet finished completing the previous request (note request_count is 1 as well as the amber-red-amber cycle is not interrupted). Case 2.4 demonstrates that after completing a cycle, when the request signal goes high, the cycle is entered again. Finally in case 2.5 multiple walk requests are demonstrated (incrementing the counter) as well as the reset signal which sets the counter to 0x0000.
 
-I have to add comments to code.
+Further comments can be found in the code.

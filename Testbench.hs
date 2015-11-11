@@ -4,37 +4,42 @@ import HDL.Hydra.Circuits.Combinational
 import TrafficLights
 
 separator :: IO ()
-separator = putStrLn (take 76 (repeat '-'))
+separator = putStrLn (take 53 (repeat '-'))
+separator1 :: IO ()
+separator1 = putStrLn (take 111 (repeat '-'))
 
 main :: IO ()
 main =
     do
     separator
-    putStrLn "Simulate controller1"
+    putStrLn "1.1 Simulate controller1"
     run_controller1 controller1_input1
 
-    putStrLn "Simulate controller1 with additional reset"
+    separator
+    putStrLn "1.2 Simulate controller1 with additional reset"
     run_controller1 controller1_input2
 
     separator
-    putStrLn "Simulate controller2 no requests"
+    separator1
+    putStrLn "2.1 Simulate controller2 no requests"
     run_controller2 controller2_input1
 
-    separator
-    putStrLn "Simulate controller2 single request"
+    separator1
+    putStrLn "2.2 Simulate controller2 single request"
     run_controller2 controller2_input2
 
-    separator
-    putStrLn "Simulate controller2 multiple requests before green"
+    separator1
+    putStrLn "2.3 Simulate controller2 multiple requests before green"
     run_controller2 controller2_input3
 
-    separator
-    putStrLn "Simulate controller2 request after whole cycle"
+    separator1
+    putStrLn "2.4 Simulate controller2 request after whole cycle"
     run_controller2 controller2_input4
 
-    separator
-    putStrLn "Simulate controller2 counter"
+    separator1
+    putStrLn "2.5 Simulate controller2 counter"
     run_controller2 controller2_input5
+    separator1
 
 
 run_controller1 input = runAllInput input output
@@ -51,6 +56,7 @@ run_controller1 input = runAllInput input output
           [string "Input: reset = ", bit reset,
           string "  Output: green = ", bit green, string " amber = ", bit amber, string " red = ", bit red]
 
+-- Test data for controller1
 controller1_input1 =
   [[0], [0], [1], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0], [0]]
 
@@ -72,8 +78,9 @@ run_controller2 input = runAllInput input output
         output =
           [string "Input: reset = ", bit reset, string " walk_request = ", bit walk_request,
           string "  Output: green = ", bit green, string " amber = ", bit amber, string " red = ", bit red, 
-          string " walk = ", bit walk, string " wait = ", bit wait, string " request_count = ", hex request_count]
+          string " walk = ", bit walk, string " wait = ", bit wait, string " request_count = 0x", hex request_count]
 
+-- Test data for controller2
 controller2_input1 =
   [[0, 0], [1, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
 
@@ -90,7 +97,7 @@ controller2_input4 =
 controller2_input5 =
   [[0, 0], [1, 0], [0, 0], [0, 1], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], 
   [0, 0], [0, 0], [0, 0], [0, 1], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0],
-  [0, 0], [0, 0], [0, 0], [0, 1], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0],
+  [0, 0], [0, 0], [0, 0], [1, 0], [0, 1], [0, 0], [0, 0], [1, 0], [0, 0],
   [0, 0], [0, 0], [0, 0], [0, 1], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
 
 
